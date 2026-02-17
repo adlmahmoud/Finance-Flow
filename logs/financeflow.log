@@ -1,0 +1,102 @@
+2026-02-17 11:16:18 | INFO     | __main__:<module>:33 - ============================================================
+2026-02-17 11:16:18 | INFO     | __main__:<module>:34 - Starting FinanceFlow v2.0.0
+2026-02-17 11:16:18 | INFO     | __main__:<module>:35 - ============================================================
+2026-02-17 11:16:18 | INFO     | __main__:init_application:42 - Initializing database...
+2026-02-17 11:16:18 | INFO     | __main__:init_application:44 - ✓ Database initialized
+2026-02-17 11:16:18 | INFO     | __main__:init_application:47 - ✓ Logging configured: C:\Users\Mahmoud\Desktop\finance-flow-v2\logs\financeflow.log
+2026-02-17 11:16:18 | INFO     | __main__:init_application:50 - APP_NAME: FinanceFlow
+2026-02-17 11:16:18 | INFO     | __main__:init_application:51 - DATABASE: sqlite:///./data/finance_flow.db
+2026-02-17 11:16:18 | INFO     | __main__:init_application:52 - THEME: dark
+2026-02-17 11:16:18 | INFO     | __main__:init_application:53 - BANK_PROVIDER: mock
+2026-02-17 11:16:18 | INFO     | __main__:<module>:65 - Starting UI...
+2026-02-17 11:16:24 | INFO     | services.bank_service:create:281 - Creating MockBankService
+2026-02-17 11:16:24 | INFO     | services.bank_service:__init__:58 - MockBankService initialized
+2026-02-17 11:16:24 | INFO     | utils.security:__init__:25 - SecurityManager initialized
+2026-02-17 11:16:24 | INFO     | controllers.app_controller:__init__:34 - AppController initialized
+2026-02-17 11:16:24 | INFO     | ui.main_app:__init__:43 - Initializing FinanceFlow
+2026-02-17 11:16:37 | INFO     | __main__:<module>:68 - Application closed
+2026-02-17 11:18:07 | INFO     | __main__:<module>:33 - ============================================================
+2026-02-17 11:18:07 | INFO     | __main__:<module>:34 - Starting FinanceFlow v2.0.0
+2026-02-17 11:18:07 | INFO     | __main__:<module>:35 - ============================================================
+2026-02-17 11:18:07 | INFO     | __main__:init_application:42 - Initializing database...
+2026-02-17 11:18:07 | INFO     | __main__:init_application:44 - ✓ Database initialized
+2026-02-17 11:18:07 | INFO     | __main__:init_application:47 - ✓ Logging configured: C:\Users\Mahmoud\Desktop\finance-flow-v2\logs\financeflow.log
+2026-02-17 11:18:07 | INFO     | __main__:init_application:50 - APP_NAME: FinanceFlow
+2026-02-17 11:18:07 | INFO     | __main__:init_application:51 - DATABASE: sqlite:///./data/finance_flow.db
+2026-02-17 11:18:07 | INFO     | __main__:init_application:52 - THEME: dark
+2026-02-17 11:18:07 | INFO     | __main__:init_application:53 - BANK_PROVIDER: mock
+2026-02-17 11:18:07 | INFO     | __main__:<module>:65 - Starting UI...
+2026-02-17 11:18:07 | INFO     | services.bank_service:create:281 - Creating MockBankService
+2026-02-17 11:18:07 | INFO     | services.bank_service:__init__:58 - MockBankService initialized
+2026-02-17 11:18:07 | INFO     | utils.security:__init__:25 - SecurityManager initialized
+2026-02-17 11:18:07 | INFO     | controllers.app_controller:__init__:34 - AppController initialized
+2026-02-17 11:18:07 | INFO     | ui.main_app:__init__:43 - Initializing FinanceFlow
+2026-02-17 11:18:18 | INFO     | __main__:<module>:68 - Application closed
+2026-02-17 11:18:58 | INFO     | __main__:<module>:33 - ============================================================
+2026-02-17 11:18:58 | INFO     | __main__:<module>:34 - Starting FinanceFlow v2.0.0
+2026-02-17 11:18:58 | INFO     | __main__:<module>:35 - ============================================================
+2026-02-17 11:18:58 | INFO     | __main__:init_application:42 - Initializing database...
+2026-02-17 11:18:58 | INFO     | __main__:init_application:44 - ✓ Database initialized
+2026-02-17 11:18:58 | INFO     | __main__:init_application:47 - ✓ Logging configured: C:\Users\Mahmoud\Desktop\finance-flow-v2\logs\financeflow.log
+2026-02-17 11:18:58 | INFO     | __main__:init_application:50 - APP_NAME: FinanceFlow
+2026-02-17 11:18:58 | INFO     | __main__:init_application:51 - DATABASE: sqlite:///./data/finance_flow.db
+2026-02-17 11:18:58 | INFO     | __main__:init_application:52 - THEME: dark
+2026-02-17 11:18:58 | INFO     | __main__:init_application:53 - BANK_PROVIDER: mock
+2026-02-17 11:18:58 | INFO     | __main__:<module>:65 - Starting UI...
+2026-02-17 11:18:58 | INFO     | services.bank_service:create:281 - Creating MockBankService
+2026-02-17 11:18:58 | INFO     | services.bank_service:__init__:58 - MockBankService initialized
+2026-02-17 11:18:58 | INFO     | utils.security:__init__:25 - SecurityManager initialized
+2026-02-17 11:18:58 | INFO     | controllers.app_controller:__init__:34 - AppController initialized
+2026-02-17 11:18:58 | INFO     | ui.main_app:__init__:43 - Initializing FinanceFlow
+2026-02-17 11:19:06 | INFO     | __main__:<module>:68 - Application closed
+2026-02-17 11:19:58 | INFO     | __main__:<module>:33 - ============================================================
+2026-02-17 11:19:58 | INFO     | __main__:<module>:34 - Starting FinanceFlow v2.0.0
+2026-02-17 11:19:58 | INFO     | __main__:<module>:35 - ============================================================
+2026-02-17 11:19:58 | INFO     | __main__:init_application:42 - Initializing database...
+2026-02-17 11:19:58 | INFO     | __main__:init_application:44 - ✓ Database initialized
+2026-02-17 11:19:58 | INFO     | __main__:init_application:47 - ✓ Logging configured: C:\Users\Mahmoud\Desktop\finance-flow-v2\logs\financeflow.log
+2026-02-17 11:19:58 | INFO     | __main__:init_application:50 - APP_NAME: FinanceFlow
+2026-02-17 11:19:58 | INFO     | __main__:init_application:51 - DATABASE: sqlite:///./data/finance_flow.db
+2026-02-17 11:19:58 | INFO     | __main__:init_application:52 - THEME: dark
+2026-02-17 11:19:58 | INFO     | __main__:init_application:53 - BANK_PROVIDER: mock
+2026-02-17 11:19:58 | INFO     | __main__:<module>:65 - Starting UI...
+2026-02-17 11:19:58 | INFO     | services.bank_service:create:281 - Creating MockBankService
+2026-02-17 11:19:58 | INFO     | services.bank_service:__init__:58 - MockBankService initialized
+2026-02-17 11:19:58 | INFO     | utils.security:__init__:25 - SecurityManager initialized
+2026-02-17 11:19:58 | INFO     | controllers.app_controller:__init__:34 - AppController initialized
+2026-02-17 11:19:58 | INFO     | ui.main_app:__init__:43 - Initializing FinanceFlow
+2026-02-17 11:20:01 | INFO     | __main__:<module>:68 - Application closed
+2026-02-17 11:20:06 | INFO     | __main__:<module>:33 - ============================================================
+2026-02-17 11:20:06 | INFO     | __main__:<module>:34 - Starting FinanceFlow v2.0.0
+2026-02-17 11:20:06 | INFO     | __main__:<module>:35 - ============================================================
+2026-02-17 11:20:06 | INFO     | __main__:init_application:42 - Initializing database...
+2026-02-17 11:20:06 | INFO     | __main__:init_application:44 - ✓ Database initialized
+2026-02-17 11:20:06 | INFO     | __main__:init_application:47 - ✓ Logging configured: C:\Users\Mahmoud\Desktop\finance-flow-v2\logs\financeflow.log
+2026-02-17 11:20:06 | INFO     | __main__:init_application:50 - APP_NAME: FinanceFlow
+2026-02-17 11:20:06 | INFO     | __main__:init_application:51 - DATABASE: sqlite:///./data/finance_flow.db
+2026-02-17 11:20:06 | INFO     | __main__:init_application:52 - THEME: dark
+2026-02-17 11:20:06 | INFO     | __main__:init_application:53 - BANK_PROVIDER: mock
+2026-02-17 11:20:06 | INFO     | __main__:<module>:65 - Starting UI...
+2026-02-17 11:20:06 | INFO     | services.bank_service:create:281 - Creating MockBankService
+2026-02-17 11:20:06 | INFO     | services.bank_service:__init__:58 - MockBankService initialized
+2026-02-17 11:20:06 | INFO     | utils.security:__init__:25 - SecurityManager initialized
+2026-02-17 11:20:06 | INFO     | controllers.app_controller:__init__:34 - AppController initialized
+2026-02-17 11:20:06 | INFO     | ui.main_app:__init__:43 - Initializing FinanceFlow
+2026-02-17 11:20:57 | INFO     | __main__:<module>:68 - Application closed
+2026-02-17 11:21:06 | INFO     | __main__:<module>:33 - ============================================================
+2026-02-17 11:21:06 | INFO     | __main__:<module>:34 - Starting FinanceFlow v2.0.0
+2026-02-17 11:21:06 | INFO     | __main__:<module>:35 - ============================================================
+2026-02-17 11:21:06 | INFO     | __main__:init_application:42 - Initializing database...
+2026-02-17 11:21:06 | INFO     | __main__:init_application:44 - ✓ Database initialized
+2026-02-17 11:21:06 | INFO     | __main__:init_application:47 - ✓ Logging configured: C:\Users\Mahmoud\Desktop\finance-flow-v2\logs\financeflow.log
+2026-02-17 11:21:06 | INFO     | __main__:init_application:50 - APP_NAME: FinanceFlow
+2026-02-17 11:21:06 | INFO     | __main__:init_application:51 - DATABASE: sqlite:///./data/finance_flow.db
+2026-02-17 11:21:06 | INFO     | __main__:init_application:52 - THEME: dark
+2026-02-17 11:21:06 | INFO     | __main__:init_application:53 - BANK_PROVIDER: mock
+2026-02-17 11:21:06 | INFO     | __main__:<module>:65 - Starting UI...
+2026-02-17 11:21:06 | INFO     | services.bank_service:create:281 - Creating MockBankService
+2026-02-17 11:21:06 | INFO     | services.bank_service:__init__:58 - MockBankService initialized
+2026-02-17 11:21:06 | INFO     | utils.security:__init__:25 - SecurityManager initialized
+2026-02-17 11:21:06 | INFO     | controllers.app_controller:__init__:34 - AppController initialized
+2026-02-17 11:21:06 | INFO     | ui.main_app:__init__:43 - Initializing FinanceFlow
+2026-02-17 11:21:09 | INFO     | __main__:<module>:68 - Application closed

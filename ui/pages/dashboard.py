@@ -1,239 +1,106 @@
-"""
-Dashboard Page - Main view showing financial overview.
-"""
-
 import flet as ft
-from datetime import datetime
-from typing import Callable, Optional
-
-from controllers.app_controller import AppController
 from ui.components.widgets import StatCard, BudgetBar, HeaderBar, TransactionItem
 
-
-class DashboardPage(ft.UserControl):
-    """Dashboard page component."""
-
-    def __init__(self, controller: AppController, user_id: int):
-        """
-        Initialize dashboard page.
-        
-        Args:
-            controller: Application controller
-            user_id: Current user ID
-        """
+class DashboardPage(ft.Column):
+    def __init__(self, controller, user_id):
         super().__init__()
         self.controller = controller
         self.user_id = user_id
-        self.page_expanded = True
-
-    def build(self):
-        """Build dashboard page."""
-        return ft.Column(
-            [
-                HeaderBar(
-                    title="FinanceFlow Dashboard",
-                    subtitle=f"Bienvenue! Aujourd'hui {datetime.now().strftime('%d/%m/%Y')}",
-                ),
-                ft.Container(
-                    content=ft.Column(
-                        [
-                            self._build_stats_row(),
-                            self._build_charts_section(),
-                            self._build_budgets_section(),
-                            self._build_transactions_section(),
-                        ],
-                        spacing=16,
-                        scroll=ft.ScrollMode.AUTO,
-                    ),
-                    padding=16,
-                    expand=True,
-                ),
-            ],
-            spacing=0,
-            expand=True,
-        )
-
-    def _build_stats_row(self) -> ft.Row:
-        """Build key statistics row."""
-        # Get dashboard data
-        try:
-            data = self.controller.get_dashboard_data(self.user_id)
-            total_balance = data.get("total_balance", 0)
-            insights = data.get("insights", {})
-            avg_expense = insights.get("average_monthly_expense", 0)
-        except Exception as e:
-            total_balance = 0
-            avg_expense = 0
-
-        return ft.Row(
-            [
-                StatCard(
-                    title="Solde Total",
-                    value=f"{total_balance:.2f}€",
-                    subtitle="Tous les comptes",
-                    icon="💳",
-                    color="#10b981",
-                ),
-                StatCard(
-                    title="Dépenses Mensuelles",
-                    value=f"{avg_expense:.2f}€",
-                    subtitle="Moyenne",
-                    icon="💸",
-                    color="#ef4444",
-                ),
-                StatCard(
-                    title="Budget Restant",
-                    value=f"{max(0, 3000 - avg_expense):.2f}€",
-                    subtitle="Ce mois",
-                    icon="🎯",
-                    color="#3b82f6",
-                ),
-            ],
-            spacing=12,
-            scroll=ft.ScrollMode.AUTO,
-        )
-
-    def _build_charts_section(self) -> ft.Container:
-        """Build charts section."""
-        return ft.Container(
-            content=ft.Column(
+        self.expand = True
+        self.scroll = ft.ScrollMode.AUTO
+        self.spacing = 20
+        self.padding = 30
+        
+        # Initialisation des données
+        self._load_data()
+        
+    def _load_data(self):
+        # Récupération des données depuis le contrôleur
+        data = self.controller.get_dashboard_data(self.user_id)
+        recent_transactions = self.controller.get_transactions(self.user_id, days_back=7)
+        
+        self.controls = [
+            HeaderBar("Tableau de bord", "Aperçu de vos finances"),
+            
+            # Cartes Statistiques
+            ft.Row(
                 [
-                    ft.Text(
-                        "Tendances",
-                        size=18,
-                        weight="bold",
+                    StatCard(
+                        "Solde Total",
+                        f"{data['total_balance']:.2f}€",
+                        ft.icons.MONETIZATION_ON,
+                        "#3b82f6",
+                        "+2.5% vs mois dernier"
                     ),
+                    StatCard(
+                        "Dépenses (Mois)",
+                        f"{data['insights']['monthly_expenses']:.2f}€",
+                        ft.icons.CREDIT_CARD,
+                        "#ef4444",
+                    ),
+                    StatCard(
+                        "Économies",
+                        f"{data['insights']['savings_rate']:.1f}%",
+                        # Remplacement de SAVINGS par MONETIZATION_ON
+                        ft.icons.MONETIZATION_ON,
+                        "#22c55e",
+                    ),
+                ],
+                spacing=20,
+            ),
+            
+            ft.Row(
+                [
+                    # Section Budgets
                     ft.Container(
                         content=ft.Column(
                             [
-                                ft.Text(
-                                    "📈 Graphique des dépenses par catégorie",
-                                    size=14,
-                                    color="#999",
-                                ),
-                                ft.Text(
-                                    "Les données de ce mois seront affichées ici",
-                                    size=12,
-                                    color="#666",
+                                ft.Text("Budgets par Catégorie", size=18, weight="bold"),
+                                ft.Column(
+                                    [
+                                        BudgetBar(
+                                            cat,
+                                            info["spent"],
+                                            info["limit"],
+                                            "#3b82f6"
+                                        ) for cat, info in data['budget_status'].items()
+                                    ],
+                                    spacing=15,
                                 ),
                             ],
-                            alignment=ft.MainAxisAlignment.CENTER,
-                            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                            spacing=8,
+                            spacing=20,
                         ),
-                        height=250,
-                        bgcolor="#1e1e1e",
-                        border_radius=8,
-                        border=ft.border.all(1, "#333"),
+                        bgcolor="#0f1419", # ou transparent selon design
+                        padding=20,
+                        border_radius=10,
+                        expand=2,
+                    ),
+                    
+                    # Section Transactions Récentes
+                    ft.Container(
+                        content=ft.Column(
+                            [
+                                ft.Row(
+                                    [
+                                        ft.Text("Récemment", size=18, weight="bold"),
+                                        ft.TextButton("Voir tout"),
+                                    ],
+                                    alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                                ),
+                                ft.Column(
+                                    [TransactionItem(t) for t in recent_transactions[:5]],
+                                    spacing=0,
+                                ),
+                            ],
+                            spacing=20,
+                        ),
+                        bgcolor="#0f1419",
+                        padding=20,
+                        border_radius=10,
+                        expand=1,
                     ),
                 ],
-                spacing=12,
+                spacing=20,
+                vertical_alignment=ft.CrossAxisAlignment.START,
             ),
-            padding=0,
-        )
-
-    def _build_budgets_section(self) -> ft.Container:
-        """Build budgets section."""
-        try:
-            data = self.controller.get_dashboard_data(self.user_id)
-            budgets = data.get("budget_status", [])
-        except Exception:
-            budgets = []
-
-        budget_items = []
-        for budget in budgets:
-            budget_items.append(
-                BudgetBar(
-                    category=budget["category"],
-                    spent=budget["spent"],
-                    limit=budget["limit"],
-                )
-            )
-
-        if not budget_items:
-            budget_items.append(
-                ft.Text(
-                    "Aucun budget configuré",
-                    color="#999",
-                    size=14,
-                )
-            )
-
-        return ft.Container(
-            content=ft.Column(
-                [
-                    ft.Text(
-                        "Budgets",
-                        size=18,
-                        weight="bold",
-                    ),
-                    ft.Column(
-                        budget_items,
-                        spacing=8,
-                    ),
-                ],
-                spacing=12,
-            ),
-            padding=0,
-        )
-
-    def _build_transactions_section(self) -> ft.Container:
-        """Build recent transactions section."""
-        try:
-            transactions = self.controller.get_transactions(self.user_id, days_back=7)
-        except Exception:
-            transactions = []
-
-        transaction_items = []
-        for txn in transactions[:10]:  # Show last 10
-            transaction_items.append(
-                TransactionItem(
-                    category=txn.category.value,
-                    description=txn.description,
-                    amount=f"{txn.amount:.2f}",
-                    date=txn.date.strftime("%d/%m/%Y"),
-                    is_income=(txn.transaction_type.value == "Revenu"),
-                )
-            )
-
-        if not transaction_items:
-            transaction_items.append(
-                ft.Text(
-                    "Aucune transaction récente",
-                    color="#999",
-                    size=14,
-                )
-            )
-
-        return ft.Container(
-            content=ft.Column(
-                [
-                    ft.Row(
-                        [
-                            ft.Text(
-                                "Transactions Récentes",
-                                size=18,
-                                weight="bold",
-                            ),
-                            ft.TextButton(
-                                text="Voir tout",
-                                on_click=None,
-                            ),
-                        ],
-                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-                    ),
-                    ft.Column(
-                        transaction_items,
-                        spacing=8,
-                        height=400,
-                        scroll=ft.ScrollMode.AUTO,
-                    ),
-                ],
-                spacing=12,
-            ),
-            padding=0,
-        )
-
-    def refresh(self):
-        """Refresh dashboard data."""
-        self.update()
+        ]

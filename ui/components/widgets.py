@@ -1,292 +1,177 @@
-"""Reusable UI components for Flet application."""
-
 import flet as ft
-from typing import Callable, Optional, Any
 
-
-class StatCard(ft.UserControl):
-    """Stat card component for displaying key metrics."""
-
-    def __init__(
-        self,
-        title: str,
-        value: str,
-        subtitle: str = "",
-        icon: str = "📊",
-        color: str = "#1f77b4",
-    ):
-        """
-        Initialize stat card.
-        
-        Args:
-            title: Card title
-            value: Main value to display
-            subtitle: Optional subtitle
-            icon: Icon emoji
-            color: Accent color
-        """
+class StatCard(ft.Container):
+    def __init__(self, title: str, value: str, icon_name: str, color: str, trend: str = None):
         super().__init__()
         self.title = title
         self.value = value
-        self.subtitle = subtitle
-        self.icon = icon
+        self.icon_name = icon_name
         self.color = color
-
-    def build(self):
-        """Build stat card."""
-        return ft.Container(
-            content=ft.Row(
-                [
-                    ft.Text(
-                        value=self.icon,
-                        size=32,
-                        color=self.color,
-                    ),
-                    ft.Column(
-                        [
-                            ft.Text(
-                                self.title,
-                                size=14,
-                                color="#999",
-                            ),
-                            ft.Text(
-                                self.value,
-                                size=24,
-                                weight="bold",
-                            ),
-                            ft.Text(
-                                self.subtitle,
-                                size=12,
-                                color="#999",
-                            ) if self.subtitle else ft.Text(""),
-                        ],
-                        spacing=4,
-                        expand=True,
-                    ),
-                ],
-                spacing=16,
-                alignment=ft.MainAxisAlignment.START,
-            ),
-            padding=16,
-            bgcolor="#1e1e1e",
-            border_radius=8,
-            border=ft.border.all(1, "#333"),
+        self.trend = trend
+        
+        # Configuration du Container
+        self.padding = 20
+        self.bgcolor = "#1e293b"
+        self.border_radius = 10
+        self.expand = True
+        
+        # Contenu
+        self.content = ft.Column(
+            [
+                ft.Row(
+                    [
+                        ft.Container(
+                            content=ft.Icon(self.icon_name, color="white"),
+                            padding=10,
+                            bgcolor=self.color,
+                            border_radius=10,
+                        ),
+                        ft.Column(
+                            [
+                                ft.Text(self.title, size=12, color="#94a3b8"),
+                                ft.Text(self.value, size=20, weight="bold"),
+                            ],
+                            spacing=2,
+                        ),
+                    ],
+                    alignment=ft.MainAxisAlignment.START,
+                    vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                ),
+            ]
         )
-
-
-class TransactionItem(ft.UserControl):
-    """Transaction list item component."""
-
-    def __init__(
-        self,
-        category: str,
-        description: str,
-        amount: str,
-        date: str,
-        is_income: bool = False,
-        on_click: Optional[Callable] = None,
-    ):
-        """
-        Initialize transaction item.
         
-        Args:
-            category: Transaction category
-            description: Transaction description
-            amount: Transaction amount
-            date: Transaction date
-            is_income: Whether it's income (green) or expense (red)
-            on_click: Click handler
-        """
-        super().__init__()
-        self.category = category
-        self.description = description
-        self.amount = amount
-        self.date = date
-        self.is_income = is_income
-        self.on_click_handler = on_click
+        if self.trend:
+            trend_color = "#22c55e" if self.trend.startswith("+") else "#ef4444"
+            self.content.controls.append(
+                ft.Container(
+                    content=ft.Text(self.trend, size=12, color=trend_color),
+                    margin=ft.margin.only(top=10),
+                )
+            )
 
-    def build(self):
-        """Build transaction item."""
-        amount_color = "#10b981" if self.is_income else "#ef4444"
-        amount_prefix = "+" if self.is_income else "-"
-        
-        return ft.Container(
-            content=ft.Row(
-                [
-                    ft.Icon(
-                        name="🏷️" if not self.is_income else "💰",
-                        color=amount_color,
-                    ),
-                    ft.Column(
-                        [
-                            ft.Text(
-                                self.description,
-                                weight="bold",
-                                size=14,
-                            ),
-                            ft.Text(
-                                self.category,
-                                size=12,
-                                color="#999",
-                            ),
-                        ],
-                        spacing=2,
-                        expand=True,
-                    ),
-                    ft.Column(
-                        [
-                            ft.Text(
-                                f"{amount_prefix}{self.amount}€",
-                                weight="bold",
-                                size=14,
-                                color=amount_color,
-                            ),
-                            ft.Text(
-                                self.date,
-                                size=12,
-                                color="#999",
-                            ),
-                        ],
-                        alignment=ft.MainAxisAlignment.CENTER,
-                        horizontal_alignment=ft.CrossAxisAlignment.END,
-                    ),
-                ],
-                spacing=12,
-                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-            ),
-            padding=12,
-            bgcolor="#1e1e1e",
-            border_radius=8,
-            border=ft.border.all(1, "#333"),
-            on_click=self.on_click_handler,
-        )
-
-
-class BudgetBar(ft.UserControl):
-    """Budget progress bar component."""
-
-    def __init__(
-        self,
-        category: str,
-        spent: float,
-        limit: float,
-    ):
-        """
-        Initialize budget bar.
-        
-        Args:
-            category: Category name
-            spent: Amount spent
-            limit: Budget limit
-        """
+class BudgetBar(ft.Container):
+    def __init__(self, category: str, spent: float, limit: float, color: str):
         super().__init__()
         self.category = category
         self.spent = spent
         self.limit = limit
-
-    def build(self):
-        """Build budget bar."""
-        percentage = min(100, (self.spent / self.limit * 100)) if self.limit > 0 else 0
-        is_exceeded = self.spent > self.limit
-        bar_color = "#ef4444" if is_exceeded else "#3b82f6"
-
-        return ft.Container(
-            content=ft.Column(
-                [
-                    ft.Row(
-                        [
-                            ft.Text(
-                                self.category,
-                                weight="bold",
-                                size=12,
-                            ),
-                            ft.Text(
-                                f"{self.spent:.2f}€ / {self.limit:.2f}€",
-                                size=12,
-                                color="#999",
-                            ),
-                        ],
-                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-                    ),
-                    ft.ProgressBar(
-                        value=percentage / 100,
-                        color=bar_color,
-                        height=8,
-                        border_radius=4,
-                    ),
-                    ft.Text(
-                        f"{percentage:.0f}%" if not is_exceeded else "Dépassé!",
-                        size=11,
-                        color="#999" if not is_exceeded else "#ef4444",
-                    ),
-                ],
-                spacing=4,
-            ),
-            padding=12,
-            bgcolor="#1e1e1e",
-            border_radius=8,
-            border=ft.border.all(1, "#333"),
+        self.color = color
+        
+        percentage = min(self.spent / self.limit, 1.0) if self.limit > 0 else 0
+        
+        self.bgcolor = "#1e293b"
+        self.padding = 15
+        self.border_radius = 10
+        
+        self.content = ft.Column(
+            [
+                ft.Row(
+                    [
+                        ft.Text(self.category, weight="bold"),
+                        ft.Text(f"{int(percentage * 100)}%", color="#94a3b8"),
+                    ],
+                    alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                ),
+                ft.ProgressBar(
+                    value=percentage,
+                    color=self.color,
+                    bgcolor="#334155",
+                    height=8,
+                ),
+                ft.Row(
+                    [
+                        ft.Text(f"{self.spent:.2f}€", size=12, color="#94a3b8"),
+                        ft.Text(f"{self.limit:.2f}€", size=12, color="#94a3b8"),
+                    ],
+                    alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                ),
+            ],
+            spacing=10,
         )
 
-
-class HeaderBar(ft.UserControl):
-    """App header bar component."""
-
-    def __init__(
-        self,
-        title: str,
-        subtitle: str = "",
-        on_menu_click: Optional[Callable] = None,
-    ):
-        """
-        Initialize header bar.
-        
-        Args:
-            title: Header title
-            subtitle: Optional subtitle
-            on_menu_click: Menu button click handler
-        """
+class HeaderBar(ft.Container):
+    def __init__(self, title: str, subtitle: str = None):
         super().__init__()
-        self.title = title
-        self.subtitle = subtitle
-        self.on_menu_click_handler = on_menu_click
+        self.padding = ft.padding.symmetric(vertical=20)
+        
+        title_col = ft.Column(
+            [
+                ft.Text(title, size=28, weight="bold"),
+            ],
+            spacing=5,
+        )
+        
+        if subtitle:
+            title_col.controls.append(ft.Text(subtitle, color="#94a3b8"))
+            
+        self.content = ft.Row(
+            [
+                title_col,
+                ft.Row(
+                    [
+                        ft.IconButton(
+                            icon=ft.icons.NOTIFICATIONS,
+                            icon_color="#94a3b8",
+                        ),
+                        ft.CircleAvatar(
+                            content=ft.Text("JD"),
+                            bgcolor="#3b82f6",
+                            radius=18,
+                        ),
+                    ],
+                    spacing=10,
+                )
+            ],
+            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+        )
 
-    def build(self):
-        """Build header bar."""
-        return ft.Container(
-            content=ft.Row(
-                [
-                    ft.Icon(
-                        name="menu",
-                        size=24,
-                        color="#fff",
-                    ),
-                    ft.Column(
-                        [
-                            ft.Text(
-                                self.title,
-                                size=20,
-                                weight="bold",
+class TransactionItem(ft.Container):
+    def __init__(self, transaction):
+        super().__init__()
+        self.transaction = transaction
+        
+        is_income = self.transaction.transaction_type == "Revenu"
+        amount_color = "#22c55e" if is_income else "#ef4444"
+        amount_sign = "+" if is_income else "-"
+        
+        self.padding = ft.padding.symmetric(vertical=10, horizontal=15)
+        self.bgcolor = "#1e293b"
+        self.border_radius = 8
+        self.margin = ft.margin.only(bottom=8)
+        
+        self.content = ft.Row(
+            [
+                ft.Row(
+                    [
+                        ft.Container(
+                            content=ft.Icon(
+                                ft.icons.SHOPPING_BAG if not is_income else ft.icons.ATTACH_MONEY,
+                                color="white",
+                                size=16
                             ),
-                            ft.Text(
-                                self.subtitle,
-                                size=12,
-                                color="#999",
-                            ) if self.subtitle else ft.Text(""),
-                        ],
-                        spacing=2,
-                        expand=True,
-                    ),
-                    ft.Icon(
-                        name="notifications",
-                        size=20,
-                        color="#fff",
-                    ),
-                ],
-                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-                vertical_alignment=ft.CrossAxisAlignment.CENTER,
-            ),
-            padding=16,
-            bgcolor="#0a0e27",
-            border_radius=0,
+                            padding=8,
+                            bgcolor="#334155",
+                            border_radius=8,
+                        ),
+                        ft.Column(
+                            [
+                                ft.Text(self.transaction.description, weight="bold"),
+                                ft.Text(
+                                    self.transaction.date.strftime("%d %b %Y"),
+                                    size=12,
+                                    color="#94a3b8"
+                                ),
+                            ],
+                            spacing=2,
+                        ),
+                    ],
+                    spacing=15,
+                ),
+                ft.Text(
+                    f"{amount_sign}{abs(self.transaction.amount):.2f}€",
+                    weight="bold",
+                    color=amount_color,
+                ),
+            ],
+            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
         )

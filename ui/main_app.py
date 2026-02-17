@@ -77,7 +77,8 @@ class FinanceFlowApp:
                     ft.Container(
                         content=ft.Column(
                             [
-                                ft.Icon(name=ft.icons.SAVINGS, size=32, color="#3b82f6"),
+                                # Remplacement de SAVINGS par MONETIZATION_ON
+                                ft.Icon(name=ft.icons.MONETIZATION_ON, size=32, color="#3b82f6"),
                                 ft.Text(
                                     "FinanceFlow",
                                     size=18,
@@ -249,8 +250,9 @@ class FinanceFlowApp:
                 [
                     ft.Column(
                         [
+                            # Remplacement de SAVINGS par MONETIZATION_ON
                             ft.Icon(
-                                name=ft.icons.SAVINGS,
+                                name=ft.icons.MONETIZATION_ON,
                                 size=64,
                                 color="#3b82f6",
                             ),

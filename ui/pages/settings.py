@@ -1,233 +1,87 @@
-"""
-Settings Page - User settings and configuration.
-"""
-
 import flet as ft
-from typing import Callable, Optional
-
-from controllers.app_controller import AppController
 from ui.components.widgets import HeaderBar
-from models.database import TransactionCategory
 
-
-class SettingsPage(ft.UserControl):
-    """Settings and configuration page."""
-
-    def __init__(
-        self,
-        controller: AppController,
-        user_id: int,
-        on_logout: Optional[Callable] = None,
-    ):
-        """
-        Initialize settings page.
-        
-        Args:
-            controller: Application controller
-            user_id: Current user ID
-            on_logout: Logout callback
-        """
+class SettingsPage(ft.Column):
+    def __init__(self, controller, user_id, on_logout):
         super().__init__()
         self.controller = controller
         self.user_id = user_id
-        self.on_logout_handler = on_logout
+        self.on_logout = on_logout
+        self.expand = True
+        self.scroll = ft.ScrollMode.AUTO
+        self.padding = 30
+        
+        self.controls = [
+            HeaderBar("Paramètres", "Préférences de l'application"),
+            
+            ft.Container(height=20),
+            
+            self._build_section(
+                "Compte",
+                [
+                    self._build_setting_item("Email", "john@example.com", ft.icons.EMAIL),
+                    self._build_setting_item("Mot de passe", "********", ft.icons.LOCK),
+                ]
+            ),
+            
+            ft.Container(height=20),
+            
+            self._build_section(
+                "Préférences",
+                [
+                    self._build_setting_item("Devise", "EUR (€)", ft.icons.ATTACH_MONEY),
+                    self._build_setting_item("Thème", "Sombre", ft.icons.DARK_MODE),
+                    self._build_setting_item("Notifications", "Activées", ft.icons.NOTIFICATIONS),
+                ]
+            ),
+            
+            ft.Container(height=40),
+            
+            ft.ElevatedButton(
+                "Se déconnecter",
+                icon=ft.icons.LOGOUT,
+                bgcolor="#ef4444",
+                color="white",
+                height=50,
+                width=200,
+                on_click=lambda e: self.on_logout(),
+            ),
+        ]
 
-    def build(self):
-        """Build settings page."""
-        return ft.Column(
-            [
-                HeaderBar(
-                    title="Paramètres",
-                    subtitle="Gérez vos préférences",
-                ),
-                ft.Container(
-                    content=ft.Column(
-                        [
-                            self._build_account_section(),
-                            ft.Divider(height=1),
-                            self._build_budget_section(),
-                            ft.Divider(height=1),
-                            self._build_bank_api_section(),
-                            ft.Divider(height=1),
-                            self._build_app_section(),
-                        ],
-                        spacing=8,
-                        scroll=ft.ScrollMode.AUTO,
-                    ),
-                    padding=16,
-                    expand=True,
-                ),
-            ],
-            spacing=0,
-            expand=True,
-        )
-
-    def _build_account_section(self) -> ft.Container:
-        """Build account settings section."""
+    def _build_section(self, title, items):
         return ft.Container(
             content=ft.Column(
                 [
-                    ft.Text(
-                        "Compte",
-                        size=16,
-                        weight="bold",
-                    ),
-                    ft.Row(
-                        [
-                            ft.Icon(name=ft.icons.PERSON),
-                            ft.Column(
-                                [
-                                    ft.Text("Email", size=12, color="#999"),
-                                    ft.Text("user@example.com", weight="bold"),
-                                ],
-                                expand=True,
-                            ),
-                            ft.Icon(name=ft.icons.EDIT),
-                        ],
-                    ),
-                    ft.Divider(height=1, color="#333"),
-                    ft.Row(
-                        [
-                            ft.Icon(name=ft.icons.LOCK),
-                            ft.Column(
-                                [
-                                    ft.Text("Mot de passe", size=12, color="#999"),
-                                    ft.Text("●●●●●●●●", weight="bold"),
-                                ],
-                                expand=True,
-                            ),
-                            ft.Icon(name=ft.icons.EDIT),
-                        ],
-                    ),
+                    ft.Text(title, size=18, weight="bold", color="#3b82f6"),
+                    ft.Column(items, spacing=0),
                 ],
-                spacing=12,
+                spacing=15,
             ),
-            padding=12,
+            bgcolor="#1e293b",
+            padding=20,
+            border_radius=10,
         )
 
-    def _build_budget_section(self) -> ft.Container:
-        """Build budget settings section."""
-        budget_inputs = []
-
-        for category in TransactionCategory:
-            budget_inputs.append(
-                ft.Row(
-                    [
-                        ft.Text(category.value, expand=True),
-                        ft.TextField(
-                            label="Limite (€)",
-                            value="500",
-                            width=120,
-                            input_filter=ft.NumbersOnlyInputFilter(),
-                        ),
-                    ],
-                    spacing=8,
-                )
-            )
-
+    def _build_setting_item(self, title, value, icon):
         return ft.Container(
-            content=ft.Column(
+            content=ft.Row(
                 [
-                    ft.Text(
-                        "Budgets par Catégorie",
-                        size=16,
-                        weight="bold",
-                    ),
-                    ft.Column(
-                        budget_inputs,
-                        spacing=8,
-                    ),
-                    ft.ElevatedButton(
-                        text="Enregistrer les budgets",
-                        on_click=self._on_save_budgets,
-                        expand=True,
-                    ),
-                ],
-                spacing=12,
-            ),
-            padding=12,
-        )
-
-    def _build_bank_api_section(self) -> ft.Container:
-        """Build bank API configuration section."""
-        return ft.Container(
-            content=ft.Column(
-                [
-                    ft.Text(
-                        "Intégration Bancaire",
-                        size=16,
-                        weight="bold",
-                    ),
-                    ft.Text(
-                        "Connectez votre compte bancaire pour synchroniser automatiquement vos transactions",
-                        size=12,
-                        color="#999",
-                    ),
-                    ft.Dropdown(
-                        label="Fournisseur",
-                        value="mock",
-                        options=[
-                            ft.dropdown.Option("mock", "Demo (Test)"),
-                            ft.dropdown.Option("plaid", "Plaid"),
-                            ft.dropdown.Option("gocardless", "GoCardless"),
+                    ft.Row(
+                        [
+                            ft.Icon(icon, size=20, color="#94a3b8"),
+                            ft.Text(title, size=16),
                         ],
-                    ),
-                    ft.TextField(
-                        label="Clé API (optionnel)",
-                        password=True,
-                        hint_text="Votre clé API",
-                    ),
-                    ft.ElevatedButton(
-                        text="Connecter un compte bancaire",
-                        expand=True,
-                    ),
-                ],
-                spacing=12,
-            ),
-            padding=12,
-        )
-
-    def _build_app_section(self) -> ft.Container:
-        """Build app settings section."""
-        return ft.Container(
-            content=ft.Column(
-                [
-                    ft.Text(
-                        "Application",
-                        size=16,
-                        weight="bold",
+                        spacing=15,
                     ),
                     ft.Row(
                         [
-                            ft.Text("Thème sombre", expand=True),
-                            ft.Switch(value=True),
+                            ft.Text(value, color="#94a3b8"),
+                            ft.Icon(ft.icons.CHEVRON_RIGHT, color="#64748b"),
                         ],
-                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-                    ),
-                    ft.Row(
-                        [
-                            ft.Text("Notifications", expand=True),
-                            ft.Switch(value=True),
-                        ],
-                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-                    ),
-                    ft.Divider(height=1, color="#333"),
-                    ft.TextButton(
-                        text="❌ Déconnexion",
-                        on_click=self._on_logout_click,
                     ),
                 ],
-                spacing=12,
+                alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
             ),
-            padding=12,
+            padding=ft.padding.symmetric(vertical=15),
+            border=ft.border.only(bottom=ft.border.BorderSide(1, "#334155")),
         )
-
-    def _on_save_budgets(self, e):
-        """Save budget settings."""
-        # TODO: Implement budget saving
-        pass
-
-    def _on_logout_click(self, e):
-        """Handle logout."""
-        if self.on_logout_handler:
-            self.on_logout_handler()
