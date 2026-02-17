@@ -28,21 +28,20 @@ class DashboardPage(ft.Column):
                     StatCard(
                         "Solde Total",
                         f"{data['total_balance']:.2f}€",
-                        ft.icons.MONETIZATION_ON,
+                        "account_balance_wallet", # CORRECTION: Nom texte direct
                         "#3b82f6",
                         "+2.5% vs mois dernier"
                     ),
                     StatCard(
                         "Dépenses (Mois)",
                         f"{data['insights']['monthly_expenses']:.2f}€",
-                        ft.icons.CREDIT_CARD,
+                        "credit_card", # CORRECTION: Nom texte direct
                         "#ef4444",
                     ),
                     StatCard(
                         "Économies",
                         f"{data['insights']['savings_rate']:.1f}%",
-                        # Remplacement de SAVINGS par MONETIZATION_ON
-                        ft.icons.MONETIZATION_ON,
+                        "savings", # CORRECTION: Nom texte direct (ou "attach_money")
                         "#22c55e",
                     ),
                 ],

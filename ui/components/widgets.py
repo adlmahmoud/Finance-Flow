@@ -110,7 +110,7 @@ class HeaderBar(ft.Container):
                 ft.Row(
                     [
                         ft.IconButton(
-                            icon=ft.icons.NOTIFICATIONS,
+                            icon="notifications", # Utilisation string
                             icon_color="#94a3b8",
                         ),
                         ft.CircleAvatar(
@@ -144,8 +144,9 @@ class TransactionItem(ft.Container):
                 ft.Row(
                     [
                         ft.Container(
+                            # Utilisation de strings "shopping_bag" et "attach_money"
                             content=ft.Icon(
-                                ft.icons.SHOPPING_BAG if not is_income else ft.icons.ATTACH_MONEY,
+                                "shopping_bag" if not is_income else "attach_money",
                                 color="white",
                                 size=16
                             ),

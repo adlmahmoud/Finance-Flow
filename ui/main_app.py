@@ -77,8 +77,8 @@ class FinanceFlowApp:
                     ft.Container(
                         content=ft.Column(
                             [
-                                # Remplacement de SAVINGS par MONETIZATION_ON
-                                ft.Icon(name=ft.icons.MONETIZATION_ON, size=32, color="#3b82f6"),
+                                # CORRECTION: "attach_money" en premier argument (pas de name=)
+                                ft.Icon("attach_money", size=32, color="#3b82f6"),
                                 ft.Text(
                                     "FinanceFlow",
                                     size=18,
@@ -112,7 +112,7 @@ class FinanceFlowApp:
                     ft.Container(
                         content=ft.Row(
                             [
-                                ft.Icon(name=ft.icons.PERSON, size=24),
+                                ft.Icon("person", size=24), # CORRECTION: "person" en direct
                                 ft.Column(
                                     [
                                         ft.Text("John Doe", weight="bold", size=12),
@@ -250,9 +250,9 @@ class FinanceFlowApp:
                 [
                     ft.Column(
                         [
-                            # Remplacement de SAVINGS par MONETIZATION_ON
+                            # CORRECTION: "attach_money" en direct
                             ft.Icon(
-                                name=ft.icons.MONETIZATION_ON,
+                                "attach_money",
                                 size=64,
                                 color="#3b82f6",
                             ),

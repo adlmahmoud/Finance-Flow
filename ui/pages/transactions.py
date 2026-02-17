@@ -22,7 +22,7 @@ class TransactionsPage(ft.Column):
             [
                 ft.TextField(
                     hint_text="Rechercher...",
-                    prefix_icon=ft.icons.SEARCH,
+                    prefix_icon="search", # String direct
                     border_radius=10,
                     bgcolor="#1e293b",
                     border_color="transparent",
@@ -44,13 +44,13 @@ class TransactionsPage(ft.Column):
                     height=45,
                 ),
                 ft.IconButton(
-                    icon=ft.icons.FILTER_LIST,
+                    icon="filter_list", # String direct
                     bgcolor="#1e293b",
                     icon_color="white",
                 ),
                 ft.ElevatedButton(
                     "Synchroniser",
-                    icon=ft.icons.SYNC,
+                    icon="sync", # String direct
                     bgcolor="#3b82f6",
                     color="white",
                     height=45,
@@ -78,7 +78,6 @@ class TransactionsPage(ft.Column):
     def _sync_transactions(self, e):
         # Simulation de sync
         self.controller.sync_transactions_from_bank(self.user_id)
-        # Recharger la page (ou juste la liste)
-        # Pour faire simple ici on peut recharger la vue
+        # Recharger la vue
         self.controls[-1] = self._build_transactions_list()
         self.update()

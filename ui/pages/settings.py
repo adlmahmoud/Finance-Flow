@@ -19,8 +19,8 @@ class SettingsPage(ft.Column):
             self._build_section(
                 "Compte",
                 [
-                    self._build_setting_item("Email", "john@example.com", ft.icons.EMAIL),
-                    self._build_setting_item("Mot de passe", "********", ft.icons.LOCK),
+                    self._build_setting_item("Email", "john@example.com", "email"),
+                    self._build_setting_item("Mot de passe", "********", "lock"),
                 ]
             ),
             
@@ -29,9 +29,9 @@ class SettingsPage(ft.Column):
             self._build_section(
                 "Préférences",
                 [
-                    self._build_setting_item("Devise", "EUR (€)", ft.icons.ATTACH_MONEY),
-                    self._build_setting_item("Thème", "Sombre", ft.icons.DARK_MODE),
-                    self._build_setting_item("Notifications", "Activées", ft.icons.NOTIFICATIONS),
+                    self._build_setting_item("Devise", "EUR (€)", "money"),
+                    self._build_setting_item("Thème", "Sombre", "dark_mode"),
+                    self._build_setting_item("Notifications", "Activées", "notifications"),
                 ]
             ),
             
@@ -39,7 +39,7 @@ class SettingsPage(ft.Column):
             
             ft.ElevatedButton(
                 "Se déconnecter",
-                icon=ft.icons.LOGOUT,
+                icon="logout",
                 bgcolor="#ef4444",
                 color="white",
                 height=50,
@@ -76,7 +76,7 @@ class SettingsPage(ft.Column):
                     ft.Row(
                         [
                             ft.Text(value, color="#94a3b8"),
-                            ft.Icon(ft.icons.CHEVRON_RIGHT, color="#64748b"),
+                            ft.Icon("chevron_right", color="#64748b"),
                         ],
                     ),
                 ],
